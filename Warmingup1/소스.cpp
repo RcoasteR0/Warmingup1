@@ -65,7 +65,7 @@ void PrintSum(int matrix1[][4], int matrix2[][4], int matrixsum[][4], char oper,
 #endif // Quiz1
 
 #ifdef Quiz3
-struct Colide
+struct Coordinate
 {
 	int x, y, z;
 	int length;
@@ -326,9 +326,9 @@ int main()
 #endif // Quiz1
 
 #ifdef Quiz3
-	Colide collist[20];
-	Colide sortedcollist[20];
-	Colide colidebuf;
+	Coordinate coordlist[20];
+	Coordinate sortedcoordlist[20];
+	Coordinate coordbuf;
 	int head = 0;
 	int count = 0;
 	int x, y, z;
@@ -354,12 +354,12 @@ int main()
 			{
 				for (int i = head; i < head + count; ++i)
 				{
-					collist[i - 1] = collist[i];
+					coordlist[i - 1] = coordlist[i];
 				}
 				--head;
 			}
 
-			collist[head + count] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
+			coordlist[head + count] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
 
 			++count;
 			break;
@@ -370,7 +370,7 @@ int main()
 				break;
 			}
 
-			collist[head + count - 1] = { 0, 0, 0, 0 };
+			coordlist[head + count - 1] = { 0, 0, 0, 0 };
 
 			--count;
 			break;
@@ -388,14 +388,14 @@ int main()
 			{
 				for (int i = count; i > 0; --i)
 				{
-					collist[i] = collist[i - 1];
+					coordlist[i] = coordlist[i - 1];
 				}
-				collist[0] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
+				coordlist[0] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
 			}
 			else
 			{
 				--head;
-				collist[head] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
+				coordlist[head] = { x, y, z, int(sqrt(pow(x,2) + pow(y,2) + pow(z,2))) };
 			}
 
 			++count;
@@ -407,7 +407,7 @@ int main()
 				break;
 			}
 
-			collist[head] = { 0, 0, 0, 0 };
+			coordlist[head] = { 0, 0, 0, 0 };
 			++head;
 			break;
 		case 'l'://저장된 점의 수
@@ -415,7 +415,7 @@ int main()
 			break;
 		case 'c'://리스트 초기화
 			for(int i = 0; i < 20; ++i)
-				collist[i] = { 0, 0, 0, 0 };
+				coordlist[i] = { 0, 0, 0, 0 };
 			head = 0;
 			count = 0;
 			break;
@@ -426,19 +426,19 @@ int main()
 				break;
 			}
 
-			colidebuf.length = 0;
+			coordbuf.length = 0;
 
 			for (int i = head; i < head + count; ++i)
 			{
-				if (collist[i].length > colidebuf.length)
-					colidebuf = collist[i];
+				if (coordlist[i].length > coordbuf.length)
+					coordbuf = coordlist[i];
 			}
 
 			cout << "가장 먼 좌표" << endl;
 			cout.setf(ios::left);
 			cout << setw(8) << "Index" << setw(5) << "x" << setw(5) << "y" << setw(5) << "z" << "length" << endl;
 			cout.setf(ios::left);
-			cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl << endl;
+			cout << setw(5) << coordbuf.x << setw(5) << coordbuf.y << setw(5) << coordbuf.z << coordbuf.length << endl << endl;
 			break;
 		case 'n'://가장 가까운 좌표
 			if (count <= 0)
@@ -447,23 +447,31 @@ int main()
 				break;
 			}
 
-			colidebuf.length = INTMAX_MAX;
+			coordbuf.length = INTMAX_MAX;
 
 			for (int i = head; i < head + count; ++i)
 			{
-				if (collist[i].length < colidebuf.length)
-					colidebuf = collist[i];
+				if (coordlist[i].length < coordbuf.length)
+					coordbuf = coordlist[i];
 			}
 
 			cout << "가장 가까운 좌표" << endl;
 			cout.setf(ios::left);
 			cout << setw(8) << "Index" << setw(5) << "x" << setw(5) << "y" << setw(5) << "z" << "length" << endl;
 			cout.setf(ios::left);
-			cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl << endl;
+			cout << setw(5) << coordbuf.x << setw(5) << coordbuf.y << setw(5) << coordbuf.z << coordbuf.length << endl << endl;
 			break;
 		case 'a'://오름차순 정렬
+			if (sort == UPPER)
+				sort = NORM;
+			else
+				sort = UPPER;
 			break;
 		case 's'://내림차순 정렬
+			if (sort == LOWER)
+				sort = NORM;
+			else
+				sort = LOWER;
 			break;
 		default:
 			break;
@@ -491,7 +499,7 @@ int main()
 					if (i < head + count && i >= head)
 					{
 						cout.setf(ios::left);
-						cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl;
+						cout << setw(5) << coordlist[i].x << setw(5) << coordlist[i].y << setw(5) << coordlist[i].z << coordlist[i].length << endl;
 					}
 					else
 						cout << endl;
@@ -504,14 +512,88 @@ int main()
 				for (int i = head + count; i > head; --i)
 				{
 					cout.setf(ios::left);
-					cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl;
+					cout << setw(5) << coordlist[i].x << setw(5) << coordlist[i].y << setw(5) << coordlist[i].z << coordlist[i].length << endl;
 				}
 			}
 			cout << endl;
 			break;
 		case UPPER:
+			for (int i = 0; i < count; ++i)
+			{
+				sortedcoordlist[i] = coordlist[head + i];
+			}
+			qsort(sortedcoordlist, count, sizeof(Coordinate), [](const void* c1, const void* c2) { 
+				const Coordinate* x = (Coordinate*)c1;
+				const Coordinate* y = (Coordinate*)c2;
+
+				if ((*x).length > (*y).length)
+					return 1;
+				if ((*x).length < (*y).length)
+					return -1;
+
+				return 0;
+				});
+
+			int n;
+			if (count < 10)
+				n = 9;
+			else
+				n = count;
+
+			for (int i = n; i >= 0; --i)
+			{
+				cout.setf(ios::left);
+				cout << setw(8) << i;
+
+				if (i < count)
+				{
+					cout.setf(ios::left);
+					cout << setw(5) << sortedcoordlist[i].x << setw(5) << sortedcoordlist[i].y << setw(5) << sortedcoordlist[i].z << sortedcoordlist[i].length << endl;
+				}
+				else
+					cout << endl;
+			}
+
+			cout << endl;
 			break;
 		case LOWER:
+			for (int i = 0; i < count; ++i)
+			{
+				sortedcoordlist[i] = coordlist[head + i];
+			}
+			qsort(sortedcoordlist, count, sizeof(Coordinate), [](const void* c1, const void* c2) {
+				const Coordinate* x = (Coordinate*)c1;
+				const Coordinate* y = (Coordinate*)c2;
+
+				if ((*x).length < (*y).length)
+					return 1;
+				if ((*x).length > (*y).length)
+					return -1;
+
+				return 0;
+				});
+
+			int n;
+			if (count < 10)
+				n = 9;
+			else
+				n = count;
+
+			for (int i = n; i >= 0; --i)
+			{
+				cout.setf(ios::left);
+				cout << setw(8) << i;
+
+				if (i < count)
+				{
+					cout.setf(ios::left);
+					cout << setw(5) << sortedcoordlist[i].x << setw(5) << sortedcoordlist[i].y << setw(5) << sortedcoordlist[i].z << sortedcoordlist[i].length << endl;
+				}
+				else
+					cout << endl;
+			}
+
+			cout << endl;
 			break;
 		default:
 			break;
