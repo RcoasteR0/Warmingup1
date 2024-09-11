@@ -485,8 +485,10 @@ int main()
 
 						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 					}
-					cout << endl << "대문자로 시작하는 단어 수: " << count << endl;
+
+					cout << endl;
 				}
+				cout << "대문자로 시작하는 단어 수: " << count << endl;
 				break;
 			case REVERSE:
 				for (int i = 0; i < 10; ++i)
