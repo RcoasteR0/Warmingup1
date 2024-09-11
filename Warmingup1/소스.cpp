@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <vector>
 #include <random>
 #include <math.h>
 #include <Windows.h>
@@ -65,6 +66,10 @@ void PrintSum(int matrix1[][4], int matrix2[][4], int matrixsum[][4], char oper,
 	}
 }
 #endif // Quiz1
+
+#ifdef Quiz2
+enum Mode{ NORM, CAPITAL, REVERSE, AT, WREVERSE, ALTWORD, UPPER, LOWER, SEARCH};
+#endif // Quiz2
 
 #ifdef Quiz3
 struct Coordinate
@@ -330,6 +335,10 @@ int main()
 #ifdef Quiz2
 	ifstream file("data.txt");
 	string strarr[10];
+	string find;
+	char command = '\0';
+	char cto = '\0', cfor = '\0';
+	Mode mode = NORM;
 
 	if (file.is_open())
 	{
@@ -338,10 +347,108 @@ int main()
 			getline(file, strarr[i]);
 			cout << strarr[i] << endl;
 		}
+		cout << endl;
 		file.close();
+
+		while (command != 'q')
+		{
+			command = GetCommand();
+			switch (command)
+			{
+			case 'c':
+				if (mode == CAPITAL)
+					mode = NORM;
+				else
+					mode = CAPITAL;
+				break;
+			case 'd':
+				if (mode == REVERSE)
+					mode = NORM;
+				else
+					mode = REVERSE;
+				break;
+			case 'e':
+				if (mode == AT)
+					mode = NORM;
+				else
+					mode = AT;
+				break;
+			case 'f':
+				if (mode == WREVERSE)
+					mode = NORM;
+				else
+					mode = WREVERSE;
+				break;
+			case 'g':
+				if (mode == ALTWORD)
+					mode = NORM;
+				else
+				{
+					cout << "바꿀 문자 입력(a->b): ";
+					cin >> cto >> cfor;
+					mode = ALTWORD;
+				}
+				break;
+			case 'h':
+				break;
+			case 'r':
+				if (mode == UPPER)
+					mode = LOWER;
+				else if (mode == LOWER)
+					mode = NORM;
+				else
+					mode = UPPER;
+				break;
+			case 's':
+				if (mode == SEARCH)
+					mode = NORM;
+				else
+				{
+					cout << "찾을 단어 입력: ";
+					cin >> find;
+
+					mode = SEARCH;
+				}
+				break;
+			default:
+				break;
+			}
+			cout << endl;
+
+			if (command == 'q')
+				break;
+
+			switch (mode)
+			{
+			case NORM:
+				for (int i = 0; i < 10; ++i)
+					cout << strarr[i] << endl;
+				break;
+			case CAPITAL:
+				break;
+			case REVERSE:
+				break;
+			case AT:
+				break;
+			case WREVERSE:
+				break;
+			case ALTWORD:
+				break;
+			case UPPER:
+				break;
+			case LOWER:
+				break;
+			case SEARCH:
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	else
 		cout << "파일을 찾을 수 없습니다";
+
+	
 	
 #endif // Quiz2
 
