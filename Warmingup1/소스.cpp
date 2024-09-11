@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
 #include <string>
-#include <sstream>
 #include <random>
 #include <math.h>
 #include <Windows.h>
@@ -69,6 +69,19 @@ void PrintSum(int matrix1[][4], int matrix2[][4], int matrixsum[][4], char oper,
 
 #ifdef Quiz2
 enum Mode{ NORM, CAPITAL, REVERSE, AT, WREVERSE, ALTWORD, UPPER, LOWER, SEARCH};
+
+bool CompareWord(string s1, string s2)
+{
+	if (s1.length() != s2.length())
+		return false;
+
+	const int gap = 'a' - 'A';
+	for (int i = 0; i < s1.length(); ++i)
+		if (s1[i] != s2[i] && s1[i] + gap != s2[i] && s1[i] != s2[i] + gap)
+			return false;
+
+	return true;
+}
 #endif // Quiz2
 
 #ifdef Quiz3
@@ -335,9 +348,12 @@ int main()
 #ifdef Quiz2
 	ifstream file("data.txt");
 	string strarr[10];
+	string sortedstrarr[10];
 	string find;
 	char command = '\0';
 	char cto = '\0', cfor = '\0';
+	int wordcount[10];
+	int count = 0;
 	Mode mode = NORM;
 
 	if (file.is_open())
@@ -349,6 +365,31 @@ int main()
 		}
 		cout << endl;
 		file.close();
+
+		for (int i = 0; i < 10; ++i)
+		{
+			wordcount[i] = 0;
+			istringstream ss(strarr[i]);
+			string temp;
+
+			while (getline(ss, temp, ' '))
+				++wordcount[i];
+
+			for (int j = 0; j < i + 1; ++j)
+			{
+				if (j == i)
+					sortedstrarr[i] = strarr[i];
+				else if (wordcount[j] >= wordcount[i])
+				{
+					for (int k = i; k > j; --k)
+					{
+						sortedstrarr[k] = sortedstrarr[k - 1];
+					}
+					sortedstrarr[j] = strarr[i];
+					break;
+				}
+			}
+		}
 
 		while (command != 'q')
 		{
@@ -390,6 +431,8 @@ int main()
 				}
 				break;
 			case 'h':
+				for (int i = 0; i < 10; ++i)
+					cout << i << "번째 줄 단어 개수: " << wordcount[i] << endl;
 				break;
 			case 'r':
 				if (mode == UPPER)
@@ -425,6 +468,7 @@ int main()
 					cout << strarr[i] << endl;
 				break;
 			case CAPITAL:
+				count = 0;
 				for (int i = 0; i < 10; ++i)
 				{
 					istringstream ss(strarr[i]);
@@ -432,13 +476,16 @@ int main()
 
 					while (getline(ss, temp, ' '))
 					{
-						if(isalpha(temp[0]) == 1)
+						if (isalpha(temp[0]) == 1)
+						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+							++count;
+						}
 						cout << temp << ' ';
 
 						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 					}
-					cout << endl;
+					cout << endl << "대문자로 시작하는 단어 수: " << count << endl;
 				}
 				break;
 			case REVERSE:
@@ -477,12 +524,43 @@ int main()
 				}
 				break;
 			case ALTWORD:
+				for (int i = 0; i < 10; ++i)
+				{
+					for (int j = 0; j < strarr[i].length(); ++j)
+					{
+						if (strarr[i][j] == cto)
+							cout << cfor;
+						else
+							cout << strarr[i][j];
+					}
+					cout << endl;
+				}
 				break;
 			case UPPER:
+				for (int i = 0; i < 10; ++i)
+					cout << sortedstrarr[i] << endl;
 				break;
 			case LOWER:
+				for (int i = 9; i >= 0; --i)
+					cout << sortedstrarr[i] << endl;
 				break;
 			case SEARCH:
+				for (int i = 0; i < 10; ++i)
+				{
+					istringstream ss(strarr[i]);
+					string temp;
+
+					while (getline(ss, temp, ' '))
+					{
+						if (CompareWord(temp, find))
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+
+						cout << temp << ' ';
+
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					}
+					cout << endl;
+				}
 				break;
 			default:
 				break;
