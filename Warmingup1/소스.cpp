@@ -402,8 +402,34 @@ int main()
 			count = 0;
 			break;
 		case 'm'://가장 먼 좌표
+			colidebuf.length = 0;
+
+			for (int i = head; i < head + count; ++i)
+			{
+				if (collist[i].length > colidebuf.length)
+					colidebuf = collist[i];
+			}
+
+			cout << "가장 먼 좌표" << endl;
+			cout.setf(ios::left);
+			cout << setw(8) << "Index" << setw(5) << "x" << setw(5) << "y" << setw(5) << "z" << "length" << endl;
+			cout.setf(ios::left);
+			cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl << endl;
 			break;
 		case 'n'://가장 가까운 좌표
+			colidebuf.length = INTMAX_MAX;
+
+			for (int i = head; i < head + count; ++i)
+			{
+				if (collist[i].length < colidebuf.length)
+					colidebuf = collist[i];
+			}
+
+			cout << "가장 가까운 좌표" << endl;
+			cout.setf(ios::left);
+			cout << setw(8) << "Index" << setw(5) << "x" << setw(5) << "y" << setw(5) << "z" << "length" << endl;
+			cout.setf(ios::left);
+			cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl << endl;
 			break;
 		case 'a'://오름차순 정렬
 			break;
@@ -432,7 +458,7 @@ int main()
 					cout.setf(ios::left);
 					cout << setw(8) << i;
 
-					if (i < head + count)
+					if (i < head + count && i >= head)
 					{
 						cout.setf(ios::left);
 						cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl;
@@ -444,13 +470,14 @@ int main()
 			else
 			{
 				cout.setf(ios::left);
-				cout << setw(8) << "Index" << setw(8) << "x, y, z" << "length" << endl;
+				cout << setw(8) << "Index" << setw(5) << "x" << setw(5) << "y" << setw(5) << "z" << "length" << endl;
 				for (int i = head + count; i > head; --i)
 				{
 					cout.setf(ios::left);
-					cout << setw(8) << i << collist[i].x << ", " << collist[i].y << ", " << setw(8) << collist[i].z << collist[i].length << endl;
+					cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl;
 				}
 			}
+			cout << endl;
 			break;
 		case UPPER:
 			break;
