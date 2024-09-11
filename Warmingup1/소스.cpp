@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-#include <vector>
+#include <sstream>
 #include <random>
 #include <math.h>
 #include <Windows.h>
@@ -425,12 +425,56 @@ int main()
 					cout << strarr[i] << endl;
 				break;
 			case CAPITAL:
+				for (int i = 0; i < 10; ++i)
+				{
+					istringstream ss(strarr[i]);
+					string temp;
+
+					while (getline(ss, temp, ' '))
+					{
+						if(isalpha(temp[0]) == 1)
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+						cout << temp << ' ';
+
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					}
+					cout << endl;
+				}
 				break;
 			case REVERSE:
+				for (int i = 0; i < 10; ++i)
+				{
+					for (int j = strarr[i].length() - 1; j >= 0; --j)
+						cout << strarr[i][j];
+					cout << endl;
+				}
 				break;
 			case AT:
+				for (int i = 0; i < 10; ++i)
+				{
+					for (int j = 0; j < strarr[i].length(); ++j)
+					{
+						cout << strarr[i][j];
+						if (j % 3 == 0)
+							cout << "@@";
+					}
+					cout << endl;
+				}
 				break;
 			case WREVERSE:
+				for (int i = 0; i < 10; ++i)
+				{
+					istringstream ss(strarr[i]);
+					string temp;
+
+					while (getline(ss, temp, ' '))
+					{
+						for (int j = temp.length() - 1; j >= 0; --j)
+							cout << temp[j];
+						cout << ' ';
+					}
+					cout << endl;
+				}
 				break;
 			case ALTWORD:
 				break;
