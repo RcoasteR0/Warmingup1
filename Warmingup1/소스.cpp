@@ -342,7 +342,10 @@ int main()
 		{
 		case '+'://맨 위 리스트 추가
 			if (count >= 20)
+			{
 				cout << "리스트가 꽉 찼습니다." << endl;
+				break;
+			}
 
 			cout << "좌표 입력: ";
 			cin >> x >> y >> z;
@@ -361,13 +364,22 @@ int main()
 			++count;
 			break;
 		case '-'://맨 위 리스트 제거
+			if (count <= 0)
+			{
+				cout << "리스트가 비었습니다." << endl;
+				break;
+			}
+
 			collist[head + count - 1] = { 0, 0, 0, 0 };
 
 			--count;
 			break;
 		case 'e'://맨 아래 리스트 추가
 			if (count >= 20)
+			{
 				cout << "리스트가 꽉 찼습니다." << endl;
+				break;
+			}
 
 			cout << "좌표 입력: ";
 			cin >> x >> y >> z;
@@ -389,6 +401,12 @@ int main()
 			++count;
 			break;
 		case 'd'://맨 아래 리스트 제거
+			if (count <= 0)
+			{
+				cout << "리스트가 비었습니다." << endl;
+				break;
+			}
+
 			collist[head] = { 0, 0, 0, 0 };
 			++head;
 			break;
@@ -402,6 +420,12 @@ int main()
 			count = 0;
 			break;
 		case 'm'://가장 먼 좌표
+			if (count <= 0)
+			{
+				cout << "리스트가 비었습니다." << endl;
+				break;
+			}
+
 			colidebuf.length = 0;
 
 			for (int i = head; i < head + count; ++i)
@@ -417,6 +441,12 @@ int main()
 			cout << setw(5) << collist[i].x << setw(5) << collist[i].y << setw(5) << collist[i].z << collist[i].length << endl << endl;
 			break;
 		case 'n'://가장 가까운 좌표
+			if (count <= 0)
+			{
+				cout << "리스트가 비었습니다." << endl;
+				break;
+			}
+
 			colidebuf.length = INTMAX_MAX;
 
 			for (int i = head; i < head + count; ++i)
