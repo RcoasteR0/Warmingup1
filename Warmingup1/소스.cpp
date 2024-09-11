@@ -1,10 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <iomanip>
+#include <string>
 #include <random>
 #include <math.h>
 #include <Windows.h>
 
-#define Quiz3
+#define Quiz2
 
 using namespace std;
 
@@ -324,6 +326,24 @@ int main()
 		cout << endl;
 	}
 #endif // Quiz1
+
+#ifdef Quiz2
+	ifstream file("data.txt");
+	string strarr[10];
+
+	if (file.is_open())
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			getline(file, strarr[i]);
+			cout << strarr[i] << endl;
+		}
+		file.close();
+	}
+	else
+		cout << "파일을 찾을 수 없습니다";
+	
+#endif // Quiz2
 
 #ifdef Quiz3
 	Coordinate coordlist[20];

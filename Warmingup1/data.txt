@@ -1,0 +1,10 @@
+This is computer graphics warming up program.
+1 2 3 4 5 6 7 8 9 10
+This is K'Sante, A champion with 4700HP, 329Armor, and 201MR.
+Has Unstoppable, a Shield, and goes over walls.
+Has Airborne, and the cooldown is only one second too, It cost 15 Mana.
+The W CD is even refreshed when he transforms.
+He has true damage on his Passive.
+Then, when he stacks Armor and MR, he gets Ability Haste too.
+Ability Haste to his Q, and his spell casting speeds up, And he has an AD ratio,
+so his W... RRRRRRRRRRRRR
