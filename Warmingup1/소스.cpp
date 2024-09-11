@@ -447,7 +447,7 @@ int main()
 				break;
 			}
 
-			coordbuf.length = INTMAX_MAX;
+			coordbuf.length = INT_MAX;
 
 			for (int i = head; i < head + count; ++i)
 			{
@@ -478,12 +478,12 @@ int main()
 		}
 		cout << endl;
 
+		int n;
 		switch (sort)
 		{
 		case NORM:
 			if (count < 10)
 			{
-				int n;
 				if (head > 9)
 					n = 19;
 				else
@@ -534,7 +534,6 @@ int main()
 				return 0;
 				});
 
-			int n;
 			if (count < 10)
 				n = 9;
 			else
@@ -573,7 +572,6 @@ int main()
 				return 0;
 				});
 
-			int n;
 			if (count < 10)
 				n = 9;
 			else
